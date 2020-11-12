@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
-
 use App\Models\Client;
 use Illuminate\Http\Request;
+use App\Exports\AllClientsExport;
 
 class ClientsController extends Controller
 {
@@ -117,5 +117,15 @@ class ClientsController extends Controller
         Client::destroy($id);
 
         return redirect('admin/clients')->with('flash_message', 'Client deleted!');
+    }
+
+    /**
+     * Exporta todos os clientes para xlsx
+     *
+     * @return void
+     */
+    public function allClientsExcel()
+    {
+        return \Excel::download(new AllClientsExport, 'clientes.xlsx');
     }
 }

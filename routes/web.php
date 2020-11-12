@@ -19,3 +19,4 @@ Route::get('/', function () {
 
 
 Route::resource('admin/clients', 'App\Http\Controllers\Admin\ClientsController');
+Route::get('clients/all/excel', ['App\Http\Controllers\Admin\ClientsController', 'allClientsExcel']);
