@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Models\Client;
 use Illuminate\Http\Request;
 use App\Exports\AllClientsExport;
+use App\Exports\SearchClientsExport;
 
 class ClientsController extends Controller
 {
@@ -127,5 +128,29 @@ class ClientsController extends Controller
     public function allClientsExcel()
     {
         return \Excel::download(new AllClientsExport, 'clientes.xlsx');
+    }
+
+    /**
+     * Exporta os clientes filtrados
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function searchClientsExcel(Request $request)
+    {
+        $keyword = $request->get('search');
+ 
+        if (!empty($keyword)) {
+            $clients = Client::where('nome', 'LIKE', "%$keyword%")
+                ->orWhere('email', 'LIKE', "%$keyword%")
+                ->latest()->get();
+        } else {
+            $clients = Client::latest()->get();
+        }
+
+        return \Excel::download(
+            new SearchClientsExport($clients), 
+            'clientes_filtrados.xlsx'
+        );
     }
 }
