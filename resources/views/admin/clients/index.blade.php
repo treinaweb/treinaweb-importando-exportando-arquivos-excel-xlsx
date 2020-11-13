@@ -13,11 +13,11 @@
                                 <h3 class="w-75 p-3">Clientes</h3>
                             </div>
                             <div class="col-md-7 d-flex align-items-center justify-content-end">
-                                <form id="upload">
+                                <form id="upload" method="POST" action="{{ url('/clients/import/excel') }}" enctype='multipart/form-data'>
                                     <div class="form-group">
                                         @csrf
                                         <label for="planilha">Importar Clientes</label>
-                                        <input type="file" class="form-control-file" id="planilha">
+                                        <input type="file" name="planilha" class="form-control-file" id="planilha">
                                     </div>
 
                                     <script type="text/javascript">

@@ -8,6 +8,7 @@ use App\Models\Client;
 use Illuminate\Http\Request;
 use App\Exports\AllClientsExport;
 use App\Exports\SearchClientsExport;
+use App\Imports\ClientsImport;
 
 class ClientsController extends Controller
 {
@@ -152,5 +153,12 @@ class ClientsController extends Controller
             new SearchClientsExport($clients), 
             'clientes_filtrados.xlsx'
         );
+    }
+
+    public function importClientsExcel(Request $request)
+    {
+        \Excel::import(new ClientsImport, $request->file('planilha'));
+
+        return redirect('admin/clients')->with('flash_message', 'Clientes Importados com sucesso!');
     }
 }
