@@ -7,7 +7,31 @@
 
             <div class="col-md-9">
                 <div class="card">
-                    <div class="card-header">Clients</div>
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <h3 class="w-75 p-3">Clientes</h3>
+                            </div>
+                            <div class="col-md-7 d-flex align-items-center justify-content-end">
+                                <form id="upload">
+                                    <div class="form-group">
+                                        @csrf
+                                        <label for="planilha">Importar Clientes</label>
+                                        <input type="file" class="form-control-file" id="planilha">
+                                    </div>
+
+                                    <script type="text/javascript">
+                                        document.getElementById("planilha").onchange = function() {
+                                            document.getElementById("upload").submit();
+                                        };
+                                    </script>
+                                </form>
+
+                                <a href="{{ url('/clients/all/excel') }}" class="btn btn-success">Todos</a>
+                                <a href="{{ url('/clients/search/excel') }}?search={{ request('search') }}" class="btn btn-primary ml-1">Filtrados</a>
+                            </div>
+                        </div>                    
+                    </div>
                     <div class="card-body">
                         <a href="{{ url('/admin/clients/create') }}" class="btn btn-success btn-sm" title="Add New Client">
                             <i class="fa fa-plus" aria-hidden="true"></i> Add New
